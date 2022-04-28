@@ -55,8 +55,13 @@ class MyViewController: UIViewController {
             switch item {
                 case .single(let model):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "PhotoTableViewCell", for: indexPath) as? PhotoTableViewCell
-                    cell?.setData(titleStr: model.title, sourceStr: model.source, imgStr: model.imgsrc)
-                    return cell!
+                    guard let tempCell = cell else { return UITableViewCell() }
+                    tempCell.setData(titleStr: model.title, sourceStr: model.source, imgStr: model.imgsrc)
+        
+                    tempCell.btn.rx.tap.subscribe { btn in
+                        print("按钮点击里===")
+                    }.disposed(by: tempCell.disposeBag)
+                    return tempCell
                 case .more(let moreModel):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "MorePhotoTableViewCell", for: indexPath) as? MorePhotoTableViewCell
                     cell?.setData(titleStr: moreModel.title, sourceStr: moreModel.source, imgStr: moreModel.imgsrc,imgArr: moreModel.imgnewextra)
