@@ -9,8 +9,22 @@ import UIKit
 import RxDataSources
 import SwiftyJSON
 
+//单元格类型
+enum NewModelsSectionItem {
+    case single(model: NewModel)
+    case more(model: NewMoreModel)
+}
+
 //接口返回数据模型
 struct NewModel {
+    var title: String
+    var imgsrc: String
+    var replyCount: String
+    var source: String
+}
+
+//设置多不一样模型
+struct NewMoreModel {
     var title: String
     var imgsrc: String
     var replyCount: String
@@ -22,16 +36,17 @@ struct Imgnewextra {
     var imgsrc: String
 }
 
+//主体
 struct NewCellModel {
     var header: String?
-    var items: [NewModel]
+    var items: [NewModelsSectionItem]
 }
 
 extension NewCellModel: SectionModelType {
     
-    typealias Item = NewModel
+    typealias Item = NewModelsSectionItem
     
-    init(original: NewCellModel, items: [NewModel]) {
+    init(original: NewCellModel, items: [Item]) {
         self = original
         self.items = items
     }

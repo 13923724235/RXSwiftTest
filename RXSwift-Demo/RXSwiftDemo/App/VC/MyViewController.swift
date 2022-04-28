@@ -52,14 +52,15 @@ class MyViewController: UIViewController {
         
         //数据赋值
         self.dataSource = RxTableViewSectionedReloadDataSource<NewCellModel>  (configureCell: { (dataSource, tabView, indexPath, item) -> UITableViewCell in
-            if item.imgnewextra?.isEmpty ?? true {
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "PhotoTableViewCell", for: indexPath) as? PhotoTableViewCell
-                cell?.setData(titleStr: item.title, sourceStr: item.source, imgStr: item.imgsrc)
-                return cell!
-            } else {
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "MorePhotoTableViewCell", for: indexPath) as? MorePhotoTableViewCell
-                cell?.setData(titleStr: item.title, sourceStr: item.source, imgStr: item.imgsrc,imgArr: item.imgnewextra)
-                return cell!
+            switch item {
+                case .single(let model):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "PhotoTableViewCell", for: indexPath) as? PhotoTableViewCell
+                    cell?.setData(titleStr: model.title, sourceStr: model.source, imgStr: model.imgsrc)
+                    return cell!
+                case .more(let moreModel):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "MorePhotoTableViewCell", for: indexPath) as? MorePhotoTableViewCell
+                    cell?.setData(titleStr: moreModel.title, sourceStr: moreModel.source, imgStr: moreModel.imgsrc,imgArr: moreModel.imgnewextra)
+                    return cell!
             }
         })
         
@@ -84,12 +85,14 @@ class MyViewController: UIViewController {
 //MARK: - UITableViewDelegate
 extension MyViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let newsSection = dataSource.sectionModels[indexPath.section]
-        let news = newsSection.items[indexPath.row]
-        if news.imgnewextra?.isEmpty ?? true {
-            return 100.0
+        let NewCellModel = dataSource.sectionModels[indexPath.section]
+        let sectionItem = NewCellModel.items[indexPath.row]
+        switch sectionItem {
+            case .single(_):
+                return 100.0
+            case .more(_):
+                return 180.0
         }
-        return 180.0
     }
 }
 

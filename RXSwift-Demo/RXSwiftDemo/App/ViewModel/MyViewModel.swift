@@ -66,7 +66,7 @@ class MyViewModel: NSObject {
     /// 数据组装
     private func getObserval(json: JSON) -> [NewCellModel] {
         guard let json = json["T1348649079062"].array else { return [] }
-        var news: [NewModel] = []
+        var news: [NewModelsSectionItem] = []
         json.forEach {
             guard !$0.isEmpty else { return }
             var imgnewextras: [Imgnewextra] = []
@@ -76,9 +76,13 @@ class MyViewModel: NSObject {
                     imgnewextras.append(subItem)
                 }
             }
-            let new = NewModel(title: $0["title"].string ?? "", imgsrc: $0["imgsrc"].string ?? "", replyCount: $0["replyCount"].string ?? "", source: $0["source"].string ?? "", imgnewextra: imgnewextras)
-            
-            news.append(new)
+            if imgnewextras.count > 0 {
+                let model = NewMoreModel(title: $0["title"].string ?? "", imgsrc: $0["imgsrc"].string ?? "", replyCount: $0["replyCount"].string ?? "", source: $0["source"].string ?? "", imgnewextra: imgnewextras)
+                news.append(.more(model: model))
+            } else {
+                let model = NewModel(title: $0["title"].string ?? "", imgsrc: $0["imgsrc"].string ?? "", replyCount: $0["replyCount"].string ?? "", source: $0["source"].string ?? "")
+                news.append(.single(model: model))
+            }
         }
         return [NewCellModel(header: "1", items: news)]
     }
