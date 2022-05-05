@@ -15,5 +15,6 @@ target 'RXSwiftDemo' do
   pod 'RxDataSources'
   pod 'Alamofire'
   pod 'Kingfisher'
+  pod 'HandyJSON'
 
  end

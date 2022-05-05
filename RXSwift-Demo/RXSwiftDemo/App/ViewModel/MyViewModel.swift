@@ -47,20 +47,36 @@ class MyViewModel: NSObject {
             .flatMap { (str) -> Observable<[NewCellModel]> in
                 self.dic["offset"] = str
                 return Observable<[NewCellModel]>.create { (obsever) -> Disposable in
-                    self.netWorkManager.requestNetworkData(.get, hostType: .Base, urlString: .GetNewsList, self.dic, nil) { code, json, msg in
-                        let news = self.getObserval(json: json)
-                        obsever.onNext(news)
-                    } falseHandler: { error in
-                        if error != nil {
-                            obsever.onError(error!)
-                        } else {
-                            obsever.onError(error!)
-                        }
-                    }
+                    self.getRequest(obsever: obsever)
+                  //  self.getMoyaRequest(obsever: obsever)
                     return Disposables.create()
                 }
             }.asDriver(onErrorJustReturn: [])
         return Output(results: driver)
+    }
+    
+    ///获取网络请求 使用 Alamofire
+    private func getRequest(obsever : AnyObserver<[NewCellModel]>) {
+        self.netWorkManager.requestNetworkData(.get, hostType: .Base, urlString: .GetNewsList, self.dic, nil) { code, json, msg in
+            let news = self.getObserval(json: json)
+            obsever.onNext(news)
+        } falseHandler: { error in
+            if error != nil {
+                obsever.onError(error!)
+            } else {
+                obsever.onError(error!)
+            }
+        }
+    }
+    
+    ///获取网络请求 使用 Moya 未完成
+    private func getMoyaRequest(obsever : AnyObserver<[NewCellModel]>) {
+        AllNetWorkManager.request(target: NetWorkAPI.news(parameters: self.dic), modelTypes: [NewMoreModel].self) { code, models in
+
+        } failureBlock: { code, msg in
+
+        }
+
     }
     
     /// 数据组装

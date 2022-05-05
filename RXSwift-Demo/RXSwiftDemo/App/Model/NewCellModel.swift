@@ -8,6 +8,7 @@
 import UIKit
 import RxDataSources
 import SwiftyJSON
+import HandyJSON
 
 //单元格类型
 enum NewModelsSectionItem {
@@ -16,24 +17,24 @@ enum NewModelsSectionItem {
 }
 
 //接口返回数据模型
-struct NewModel {
-    var title: String
-    var imgsrc: String
-    var replyCount: String
-    var source: String
+struct NewModel: HandyJSON {
+    var title: String = ""
+    var imgsrc: String = ""
+    var replyCount: String = ""
+    var source: String = ""
 }
 
 //设置多不一样模型
-struct NewMoreModel {
-    var title: String
-    var imgsrc: String
-    var replyCount: String
-    var source: String
+struct NewMoreModel: HandyJSON {
+    var title: String = ""
+    var imgsrc: String = ""
+    var replyCount: String = ""
+    var source: String = ""
     var imgnewextra: [Imgnewextra]?
 }
 
 struct Imgnewextra {
-    var imgsrc: String
+    var imgsrc: String = ""
 }
 
 //主体

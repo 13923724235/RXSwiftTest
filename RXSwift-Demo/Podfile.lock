@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.5.0)
   - Differentiator (5.0.0)
+  - HandyJSON (5.0.2)
   - Kingfisher (7.2.1)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
@@ -22,6 +23,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - HandyJSON
   - Kingfisher
   - Moya/RxSwift
   - RxCocoa
@@ -34,6 +36,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Differentiator
+    - HandyJSON
     - Kingfisher
     - Moya
     - RxDataSources
@@ -47,6 +50,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   Kingfisher: 7c084bebf7d548c623ad41bcf765fb200efed369
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -56,6 +60,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 3b9b6251aa7dc01ee0717b1e6180f66d6eda604e
+PODFILE CHECKSUM: e10c1dc75b1f84321f63ca6fdf32cf89af11b36a
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
