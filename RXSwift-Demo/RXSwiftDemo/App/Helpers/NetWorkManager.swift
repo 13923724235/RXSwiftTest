@@ -5,39 +5,37 @@
 //  Created by xiaowu on 2022/4/27.
 //
 
-import UIKit
 import Alamofire
 import SwiftyJSON
+import UIKit
 
 class NetWorkManager: NSObject {
-    
-    public enum UrlHostType:String {
+    public enum UrlHostType: String {
         case Base = "https://c.m.163.com/"
     }
-    
-    enum RequestUrlType:String {
+
+    enum RequestUrlType: String {
         case GetNewsList = "dlist/article/dynamic"
     }
-    
+
     /// 单利
     static let shareInstance = NetWorkManager()
     /// 网络请求对象
     var sessionManager: Session!
-  
-    private override init() {
+
+    override private init() {
         super.init()
-        self.sessionManager = Session()
+        sessionManager = Session()
     }
-    
-    //数据请求
+
+    // 数据请求
     open func requestNetworkData(_ method: HTTPMethod,
-                                 hostType:UrlHostType,
-                                 urlString:RequestUrlType,
-                                 _ parameters:Parameters? = nil,
-                                 _ body:String? = nil,
-                                 successHandler: @escaping (_ code:Int, _ datas:JSON, _ desc:String) -> Swift.Void,
-                                 falseHandler:  @escaping (_ error: Error?) -> Swift.Void) {
-        
+                                 hostType: UrlHostType,
+                                 urlString: RequestUrlType,
+                                 _ parameters: Parameters? = nil,
+                                 _ body: String? = nil,
+                                 successHandler: @escaping (_ code: Int, _ datas: JSON, _ desc: String) -> Swift.Void,
+                                 falseHandler: @escaping (_ error: Error?) -> Swift.Void) {
         let url = "\(hostType.rawValue)\(urlString.rawValue)"
         var printUrl = ""
         printUrl += url
@@ -52,7 +50,7 @@ class NetWorkManager: NSObject {
             }
             printUrl = printUrl.subString(to: printUrl.count - 1)
         }
-        
+
         printUrl = printUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         var originalRequest: URLRequest?
         if let url = URL(string: printUrl) {
@@ -61,7 +59,7 @@ class NetWorkManager: NSObject {
             falseHandler(nil)
             return
         }
-        
+
         originalRequest?.httpMethod = method.rawValue
         if let bodyStr = body {
             originalRequest?.httpBody = bodyStr.data(using: .utf8, allowLossyConversion: false)
@@ -69,17 +67,15 @@ class NetWorkManager: NSObject {
         } else {
             originalRequest?.setValue("x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         }
-        
-        self.sessionManager.request(originalRequest!).responseJSON { (response) in
+
+        sessionManager.request(originalRequest!).responseJSON { response in
             if let value = response.value {
                 let json = JSON(value)
-                successHandler(200,json,"")
+                successHandler(200, json, "")
             } else {
-             //   ProgressHUD.showTextPrompt("网络异常")
+                //   ProgressHUD.showTextPrompt("网络异常")
                 falseHandler(response.error ?? nil)
             }
         }
-      
     }
 }
-
