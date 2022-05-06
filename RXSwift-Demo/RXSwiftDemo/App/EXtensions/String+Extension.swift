@@ -144,7 +144,7 @@ extension String {
 
         let size = CGSize(width: maxWidth, height: maxHeight)
 
-        let rect: CGRect = boundingRect(with: size, options: option, attributes: attributes, context: nil)
+        let rect: CGRect = self.boundingRect(with: size, options: option, attributes: attributes, context: nil)
 
         return rect.size
     }
