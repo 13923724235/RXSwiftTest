@@ -64,7 +64,7 @@ class MyViewController: UIViewController {
                 return tempCell
             case let .more(moreModel):
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "MorePhotoTableViewCell", for: indexPath) as? MorePhotoTableViewCell
-                cell?.setData(titleStr: moreModel.title, sourceStr: moreModel.source, imgStr: moreModel.imgsrc, imgArr: moreModel.imgnewextra)
+                cell?.setData(titleStr: moreModel.title, sourceStr: moreModel.source, imgStr: moreModel.imgsrc, imgArr: moreModel.imgnewextra ?? [Imgnewextra]())
                 return cell!
             }
         })

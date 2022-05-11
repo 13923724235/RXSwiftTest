@@ -46,15 +46,15 @@ class MorePhotoTableViewCell: UITableViewCell {
     }
 
     // 赋值
-    func setData(titleStr: String,
-                 sourceStr: String,
-                 imgStr: String,
-                 imgArr: [Imgnewextra]?) {
+    func setData(titleStr: String = "",
+                 sourceStr: String = "",
+                 imgStr: String = "",
+                 imgArr: [Imgnewextra] = [Imgnewextra]()) {
         let url = URL(string: imgStr.legalUrlString ?? "")
         firstImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
 
-        if let imagesData = imgArr, imgArr?.count == 2 {
-            let images = imagesData.map { $0.imgsrc.legalUrlString }
+        if imgArr.count == 2 {
+            let images = imgArr.map { $0.imgsrc.legalUrlString }
             secondImageView.kf.setImage(with: URL(string: images[0] ?? ""), placeholder: UIImage(named: "placeholder"))
             thirdImageView.kf.setImage(with: URL(string: images[1] ?? ""), placeholder: UIImage(named: "placeholder"))
         }
